@@ -95,8 +95,25 @@ public class Burger {
     public int getZutatenmenge() {
         return zutatenmenge;
     }
+    
+    
 
-    public String getName() {
+    public Zutat[] getZutaten() {
+		return zutaten;
+	}
+
+
+	public String getName() {
         return name;
     }
+    
+    public void rezeptAusgeben() {
+    	for(int i=0; i<zutaten.length; i++) {
+    		if(zutaten[i] != null) {
+    			zutaten[i].zubereiten();
+    		}
+    		
+    	}
+    }
+    
 }

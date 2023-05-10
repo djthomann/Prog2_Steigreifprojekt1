@@ -17,4 +17,7 @@ public class Sauce extends Zutat{
         return geschmack;
     }
 
+    public void zubereiten() {
+        System.out.println(getName() + " wird geschüttelt");
+        }
 }

@@ -6,14 +6,16 @@ import javax.management.loading.MLet;
  * Über einen while-loop wird solange ein Kommando vom Nutzer abgefragt, bis dieser den laufend-boolean per Kommando "beenden" auf false setzt
  * 
  * @author Lisa Kügler, David Thomann
- * TODO: Zubereiten Methode für alle Zutaten implimentieren
- * TODO: rezeptAusgeben Methode (siehe Folie 5) in Burger Klasse
+ * -> Done TODO: Zubereiten Methode für alle Zutaten implimentieren
+ * -> Done TODO: rezeptAusgeben Methode (siehe Folie 5) in Burger Klasse
  * TODO: gesamtZubereitungsZeit und gesamtPreis Methoden implimentieren
- * TODO: Dynamische Backzeit relevant für Höhe Brötchen und Bratling
+ * -> DoneTODO: Dynamische Backzeit relevant für Höhe Brötchen und Bratling
  * TODO: burgerErstellen und zutatenListe erstellen Methoden abändern
  * TODO: Was muss abstract sein?
  * TODO: Genau ein Burgerbrötchen muss dabei sein
- * TODO: TEST
+ * TODO: Ignore Case bei Eingabe
+ * TODO: Evtl. Zeit im konstruktor zu Double (Auf der Folie steht int ist aber unpraktischer)
+ * -> Done TODO: Bratzeit in Min + sek 
  * TODO: Dokumentation
  *  * 
  */
@@ -68,7 +70,16 @@ public class Burgerladen {
         meinMenu.zutatHinzufuegen(new Sauce(52, "Honig-Senf-Sauce", 0.25f, false, true, false, 8, "süß"));
 
         meineBestellungen = new Bestellliste();
-
+        
+        //Test Burger
+        Burger burger = new Burger("NomNom");
+        meineBestellungen.burgerHinzufuegen(burger);
+        burger.zutatHinzufuegen(meinMenu.getZutat(14));
+        burger.zutatHinzufuegen(meinMenu.getZutat(20));
+        burger.zutatHinzufuegen(meinMenu.getZutat(40));
+        burger.zutatHinzufuegen(meinMenu.getZutat(30));
+        burger.zutatHinzufuegen(meinMenu.getZutat(52));
+        
     }
 
     // ---------------------------------
@@ -133,7 +144,8 @@ public class Burgerladen {
                 laufend = false;
                 System.out.println("Deine Bestellten Burger:");
                 meineBestellungen.bestellungenAusgeben();
-                //System.out.println("Re")
+                
+                
                 break;
             default:
                 System.out.println(eingabe + " ist keine gültige Eingabe!");

@@ -23,8 +23,7 @@ public class Zutat {
     /** 
      * @return int
      */
-    public int zubereiten() {
-        return 0;
+    public void zubereiten() {
     }
 
     public float berechneHoehe() {

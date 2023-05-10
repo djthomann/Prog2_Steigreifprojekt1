@@ -29,7 +29,8 @@ public class Bestellliste {
 
         for (int i = 0; i < meineBurger.length; i++) {
             if(meineBurger[i] != null) {
-                System.out.println(i + " " + meineBurger[i].toString());   
+                System.out.println(i + " " + meineBurger[i].toString());  
+                meineBurger[i].rezeptAusgeben();
             }
         }
 

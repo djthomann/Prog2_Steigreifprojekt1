@@ -9,12 +9,19 @@ public class Gemuese extends Zutat {
         this.scheibenDicke = scheibenDicke;
     }
 
-    
     /** 
      * @return float
      */
     public float berechneHoehe() {
         return scheibenAnzahl * scheibenDicke;
     }
-
+    /**
+     * Anleitung zum zzubereiten des Gemüses
+     * */
+    public void zubereiten() {
+        System.out.println(getName() + " wird gewaschen");
+        for(int i=0; i<scheibenAnzahl; i++) {
+        	System.out.println(i+1 + ". Scheibe mit " + scheibenDicke + "mm schneiden" );
+        }
+    }
 }
