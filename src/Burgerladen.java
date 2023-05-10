@@ -6,6 +6,15 @@ import javax.management.loading.MLet;
  * Über einen while-loop wird solange ein Kommando vom Nutzer abgefragt, bis dieser den laufend-boolean per Kommando "beenden" auf false setzt
  * 
  * @author Lisa Kügler, David Thomann
+ * TODO: Zubereiten Methode für alle Zutaten implimentieren
+ * TODO: rezeptAusgeben Methode (siehe Folie 5) in Burger Klasse
+ * TODO: gesamtZubereitungsZeit und gesamtPreis Methoden implimentieren
+ * TODO: Dynamische Backzeit relevant für Höhe Brötchen und Bratling
+ * TODO: burgerErstellen und zutatenListe erstellen Methoden abändern
+ * TODO: Was muss abstract sein?
+ * TODO: Genau ein Burgerbrötchen muss dabei sein
+ * TODO: TEST
+ * TODO: Dokumentation
  *  * 
  */
 
@@ -119,9 +128,12 @@ public class Burgerladen {
                 System.out.println("Das sind die aktuellen Bestellungen:");
                 meineBestellungen.bestellungenAusgeben();
                 break;
-            case "beenden":
-                System.out.println("Die Bestellung wird beendet");
+            case "bestellen":
+                System.out.println("Die Bestellung wird bearbeitet");
                 laufend = false;
+                System.out.println("Deine Bestellten Burger:");
+                meineBestellungen.bestellungenAusgeben();
+                //System.out.println("Re")
                 break;
             default:
                 System.out.println(eingabe + " ist keine gültige Eingabe!");
