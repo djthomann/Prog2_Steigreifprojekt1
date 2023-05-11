@@ -14,15 +14,19 @@ public class Broetchen extends Zutat{
     public int backzeit() {
     	return backzeit;
     }
-    public double backzeitMinuten() {
+
+    public float backzeitMinuten() {
     	
-    	return (double) backzeit/60;
+    	return (float) backzeit/60;
     }
     /** 
      * @return float
      */
     public float berechneHoehe() {
-        return hoehe += ((backzeit*0.025)*backzeitMinuten());
+        System.out.println("Brötchen - Grundhöhe" + hoehe + "Schwund: " + hoehe*0.035f*backzeitMinuten());
+        System.out.println("Schwund pro Minute: " + hoehe*0.025);
+        System.out.println("Backzeit: " + backzeitMinuten());
+        return hoehe + ((hoehe*0.025f)*backzeitMinuten());
     }
 
     public void zubereiten() {

@@ -68,16 +68,16 @@ public class Burger {
             if(zutat != null) {
                 hoehe += zutat.berechneHoehe();
             }
-        } 
+        }
         return hoehe;
     }
 
     public String berechneGeschmack() {
-        String geschmack = "";
+        String geschmack = "normal";
         for(Zutat zutat : zutaten) {
             if(zutat instanceof Sauce) {
                 if(((Sauce)zutat).getGeschmack() != "normal") {
-                    return ((Sauce)zutat).getGeschmack();
+                    geschmack = ((Sauce)zutat).getGeschmack();
                 }
             }
         }
@@ -85,9 +85,14 @@ public class Burger {
     }
 
     public String toString() {
-        String burger = getName() + " (" + berechneHoehe() + typBerechnen() + berechneGeschmack() +  ") " + ":\n";
+        String burger = getName() + " (" + berechneHoehe() + "mm | " + typBerechnen() + " | " + berechneGeschmack() +  ")" + ":\nZutaten: ";
         for(int i = 0; i < zutatenmenge; i++) {
-            burger = burger.concat(zutaten[i].getName() + " ");
+            if(i < zutatenmenge - 1) {
+                burger = burger.concat(zutaten[i].getName() + ", ");
+            } else {
+                burger = burger.concat(zutaten[i].getName());
+            }
+            
         }
         return burger;
     }
@@ -106,11 +111,22 @@ public class Burger {
 	public String getName() {
         return name;
     }
+
+    public boolean hatBroetchen() {
+        for(Zutat zutat : zutaten) {
+            if(zutat instanceof Broetchen) {
+                return true;
+            }
+        }
+        return false;
+    }
     
     public void rezeptAusgeben() {
+        System.out.println("Rezept:");
     	for(int i=0; i<zutaten.length; i++) {
     		if(zutaten[i] != null) {
-    			zutaten[i].zubereiten();
+    			System.out.print(i+1 + ". ");
+                zutaten[i].zubereiten();
     		}
     		
     	}

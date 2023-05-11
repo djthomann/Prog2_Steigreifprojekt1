@@ -29,11 +29,19 @@ public class Bestellliste {
 
         for (int i = 0; i < meineBurger.length; i++) {
             if(meineBurger[i] != null) {
-                System.out.println(i + " " + meineBurger[i].toString());  
-                meineBurger[i].rezeptAusgeben();
+                System.out.println((i+1) + ". " + meineBurger[i].toString());  
             }
         }
 
+    }
+
+    public void rezepteAusgeben() {
+        for (int i = 0; i < meineBurger.length; i++) {
+            if(meineBurger[i] != null) {
+                System.out.println("\n" + (i+1) + ". " + meineBurger[i].toString()); 
+                meineBurger[i].rezeptAusgeben();
+            }
+        }
     }
 
 }

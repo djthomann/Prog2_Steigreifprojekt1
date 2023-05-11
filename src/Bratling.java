@@ -7,6 +7,7 @@ public class Bratling extends Zutat{
     public Bratling(int nummer, String name, float preis, boolean klassisch, boolean vegetarisch, boolean vegan, int bratzeit, int hoehe) {
         super(nummer, name, preis, klassisch, vegetarisch, vegan);
         this.bratzeit = bratzeit;
+        System.out.println(name + this.bratzeit);
         this.hoehe = hoehe;
     }
 
@@ -15,11 +16,14 @@ public class Bratling extends Zutat{
      * @return float
      */
     public float berechneHoehe() {
-        return hoehe -= ((hoehe*0.035)*bratzeitGesamt());
+        System.out.println("Bratling - Grundhöhe" + hoehe + "Schwund: " + ((hoehe*0.035f)*bratzeitGesamt()));
+        System.out.println("Schwund pro Minute: " + hoehe*0.035);
+        System.out.println("Bratzeit: " + bratzeitGesamt());
+        return hoehe - ((hoehe*0.035f)*bratzeitGesamt());
     }
     
-    public double bratzeitGesamt() {
-    	return (double) bratzeit/60;
+    public float bratzeitGesamt() {
+    	return (float) bratzeit/60;
     }
 
     public int bratzeitMinuten() {
@@ -32,5 +36,5 @@ public class Bratling extends Zutat{
     
     public void zubereiten() {
         System.out.println(getName() + " von jeder Seite " + bratzeitMinuten() + " Minuten und " + bratzeitSekunden()+ " Sekunden grillen" );
-        }
+    }
 }

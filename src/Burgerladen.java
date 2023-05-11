@@ -10,7 +10,7 @@ import javax.management.loading.MLet;
  * -> Done TODO: rezeptAusgeben Methode (siehe Folie 5) in Burger Klasse
  * TODO: gesamtZubereitungsZeit und gesamtPreis Methoden implimentieren
  * -> DoneTODO: Dynamische Backzeit relevant für Höhe Brötchen und Bratling
- * TODO: burgerErstellen und zutatenListe erstellen Methoden abändern
+ * -> Done TODO: burgerErstellen und zutatenListe erstellen Methoden abändern
  * TODO: Was muss abstract sein?
  * TODO: Genau ein Burgerbrötchen muss dabei sein
  * TODO: Ignore Case bei Eingabe
@@ -29,11 +29,13 @@ public class Burgerladen {
      * Zwei Konstanten waren aus der Aufgabe vorgegeben: Maximale Zutaten pro Burger und maximale Anzahl an Bestellungen/Burgern
      */
     public static final int MAXIMALE_ZUTATEN = 9;
-    public static final int MAXIMALE_BURGER = 10;
+    public static final int MAXIMALE_BURGER = 8; //  
 
     private static String eingabe;
     private static Menu meinMenu;
     private static Bestellliste meineBestellungen;
+    private static int aktuellerBurgerIndex;
+    private static Burger aktuellerBurger;
     private static boolean laufend;
 
     /**
@@ -79,45 +81,21 @@ public class Burgerladen {
         burger.zutatHinzufuegen(meinMenu.getZutat(40));
         burger.zutatHinzufuegen(meinMenu.getZutat(30));
         burger.zutatHinzufuegen(meinMenu.getZutat(52));
+        System.out.println(burger.getZutaten()[0]);
+
+        //Test Burger
+        Burger burger2 = new Burger("MI-Burger");
+        meineBestellungen.burgerHinzufuegen(burger2);
+        burger2.zutatHinzufuegen(meinMenu.getZutat(10));
+        burger2.zutatHinzufuegen(meinMenu.getZutat(21));
+        burger2.zutatHinzufuegen(meinMenu.getZutat(41));
+        burger2.zutatHinzufuegen(meinMenu.getZutat(31));
+        burger2.zutatHinzufuegen(meinMenu.getZutat(51));
         
     }
 
     // ---------------------------------
     // METHODEN
-
-    public static void burgerErstellen() {
-        String name;
-        System.out.println("Wie soll der Burger heißen?");
-        name = StaticScanner.nextString();
-        Burger burger = new Burger(name);
-        meineBestellungen.burgerHinzufuegen(burger);
-        zutatenlisteErstellen(burger);
-        System.out.println("Fertiggestellter Burger:");
-        System.out.println(burger.toString());
-    }
-
-    
-    /** 
-     * @param burger
-     */
-    public static void zutatenlisteErstellen(Burger burger) {
-        int eingabe;
-        Zutat zutat;
-        do {
-            System.out.println("Zutat-Nr. eingeben: ('0' stellt den Burger fertig)");
-            eingabe = StaticScanner.nextInt();
-            if(eingabe == 0) {
-                System.out.println("Zutatenliste wird fertiggestellt.");
-                return;
-            } else {
-                zutat = meinMenu.getZutat(eingabe);
-                if(zutat != null) {
-                    burger.zutatHinzufuegen(zutat);
-                }
-                System.out.println("Keine gültige Zutat-Nr.");
-            }
-        } while(burger.getZutatenmenge() < MAXIMALE_ZUTATEN);
-    }
 
     /**
      * Interpretation der Eingabezeile mit verschiedenen Kommandos
@@ -126,26 +104,58 @@ public class Burgerladen {
      */
 
     public static void eingabeVerarbeiten(String eingabe) {
-        switch(eingabe) {
+
+        String[] kommandos = eingabe.split(" ");
+
+        switch(kommandos[0]) {
+            case "help":
+                System.out.println("Folgende Kommandos stehen zur Verfügung:");
+                break;
             case "menu":
                 System.out.println("Das ist das Menü:");
                 meinMenu.menuAusgeben();
                 break;
-            case "neuer Burger":
-                System.out.println("Neuer Burger wird erstellt!");
-                burgerErstellen();
+            case "neuer":
+                if(kommandos.length == 3 && kommandos[1].equals("Burger")) {
+                    System.out.println("Neuer Burger '" + kommandos[2] + "' wird erstellt!");
+                    aktuellerBurger = new Burger(kommandos[2]);
+                } else {
+                    System.out.println("Kein vollständiges Kommando");
+                }
                 break;
-            case "meine Burger":
-                System.out.println("Das sind die aktuellen Bestellungen:");
-                meineBestellungen.bestellungenAusgeben();
+            case "Zutat": 
+                if(kommandos.length == 2) {
+                    if(aktuellerBurger != null) {
+                        aktuellerBurger.zutatHinzufuegen(meinMenu.getZutat(Integer.parseInt(kommandos[1])));
+                    } else {
+                        System.out.println("Erstelle zuerst einen neuen Burger");
+                    }
+                } else {
+                    System.out.println("Kein vollständiges Kommando");
+                }
+                break;
+            case "ok":
+                if(aktuellerBurger.hatBroetchen()) {
+                    System.out.println("Burger wird fertiggestellt");    
+                    meineBestellungen.burgerHinzufuegen(aktuellerBurger);
+                    aktuellerBurger = null;
+                } else {
+                    System.out.println("Es fehlt noch ein Brötchen!");
+                }
+                break;
+            case "meine":
+                if(kommandos.length == 2 && kommandos[1].equals("Burger")) {
+                    System.out.println("Das sind die aktuellen Bestellungen:");
+                    meineBestellungen.bestellungenAusgeben();
+                } else {
+                    System.out.println("kein vollständiges Kommando");
+                }
                 break;
             case "bestellen":
                 System.out.println("Die Bestellung wird bearbeitet");
                 laufend = false;
-                System.out.println("Deine Bestellten Burger:");
-                meineBestellungen.bestellungenAusgeben();
-                
-                
+                System.out.println("Das sind die Rezepte: ");
+                meineBestellungen.rezepteAusgeben();               
                 break;
             default:
                 System.out.println(eingabe + " ist keine gültige Eingabe!");
@@ -162,9 +172,10 @@ public class Burgerladen {
 
         Burgerladen meinLaden = new Burgerladen();
         laufend = true;
+        System.out.println();
 
         while(laufend) {
-            System.out.println("Geben Sie ein, was Sie tun möchten");
+            System.out.println("\nGeben Sie ein, was Sie tun möchten");
             eingabe = StaticScanner.nextString();
             eingabeVerarbeiten(eingabe);
         }
